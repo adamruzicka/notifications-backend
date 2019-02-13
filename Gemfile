@@ -34,6 +34,8 @@ gem 'rswag-ui'
 # JSON API serializer
 gem 'fast_jsonapi'
 
+gem 'graphql'
+
 gem 'pundit'
 
 group :development, :test do
