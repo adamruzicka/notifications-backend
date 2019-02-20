@@ -90,3 +90,39 @@ add `--help` to see more options.
 ### PG extensions
 
 This project uses UUID-typed columns, which relies on `pgcrypto` extension which may not be shipped with PostgreSQL by default. On Fedora this extension lives in the `postgresql-contrib` package. Official postgres docker image come bundled with this extension.
+
+## Application registration
+
+```yaml
+---
+application:
+  name: $APPLICATION_NAME
+  title: $APPLICATION_TITLE
+event_types:
+  - id: $EVENT_TYPE_1_ID
+    name: $EVENT_TYPE_1_NAME
+    title: $EVENT_TYPE_1_TITLE
+    levels: {} # This event type has no levels
+  - id: $EVENT_TYPE_2_ID
+    name: $EVENT_TYPE_2_NAME
+    title: $EVENT_TYPE_2_TITLE
+    levels:
+      - id: $LEVEL_1_ID
+        name: $LEVEL_1_NAME
+        title: $LEVEL_1_TITLE
+      - id: $LEVEL_2_ID
+        name: $LEVEL_2_NAME
+        title: $LEVEL_2_TITLE
+```
+
+`${$THING}_NAME`: the identifier used to match the application in the incoming messages
+`${$THING}_TITLE`: the string displayed in the UI as a label
+`${$THING}_ID`: An id uniquely identifying the `$THING` within the application in case the application wants to add/modify/remove the `$THING`
+
+If an application wishes to send messages through us, it should send us the definition of all its types when it starts and later anytime the definition changes.
+
+Once an application is registered, it can change its title, but not its name. A registered application can freely change (add, modify, remove) any things scoped under it.
+
+For event types and levels, the entries in UI will most likely be displayed in the order they were provided in the registration message.
+
+Levels are a generalization of what previously was severity. An event type can have 0-1 additional fields which may have event-type specific meaning.
