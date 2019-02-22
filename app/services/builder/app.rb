@@ -18,10 +18,10 @@ module Builder
     # rubocop:enable Style/TrivialAccessors
 
     def build!
-      app = ::App.new(:name => @name)
+      app = ::App.new(:name => @name, :title => @name)
       app.save!
-      event_types.each do |type|
-        app.event_types.create(:name => type)
+      event_types.each_with_index do |type, index|
+        app.event_types.create(:name => type, :title => type, :external_id => index.to_s)
       end
       app
     end
