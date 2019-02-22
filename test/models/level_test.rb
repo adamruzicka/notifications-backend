@@ -13,4 +13,7 @@ class LevelTest < ActiveSupport::TestCase
   should validate_presence_of(:title)
   should validate_presence_of(:external_id)
   should validate_uniqueness_of(:external_id).scoped_to(:event_type_id)
+
+  should have_many :level_filters
+  should have_many(:filters).through(:level_filters)
 end

@@ -7,7 +7,7 @@ FactoryBot.define do
 
     trait :with_event_type do
       after(:create) do |instance|
-        instance.event_types << FactoryBot.build(:event_type)
+        create :event_type, :with_levels, :app => instance
       end
     end
   end

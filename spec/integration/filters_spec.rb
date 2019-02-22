@@ -23,7 +23,7 @@ filter_spec = {
     properties: {
       apps: relationship_spec,
       event_types: relationship_spec,
-      severity_filters: relationship_spec
+      levels: relationship_spec
     }
   }
 }.merge simple_spec(%i[type id] => :string)
@@ -65,8 +65,8 @@ describe 'filters API' do
                 event_types: {
                   data: [{ :id => '1', :type => 'event_type' }, { :id => 2, :type => 'event_type' }]
                 },
-                severity_filters: {
-                  data: [{ :id => '1', :type => 'severity_filter' }, { :id => 2, :type => 'severity_filter' }]
+                levels: {
+                  data: [{ :id => '1', :type => 'level' }, { :id => 2, :type => 'level' }]
                 }
               }
             }
@@ -78,7 +78,7 @@ describe 'filters API' do
           Builder::Filter.build!(account) do |f|
             f.application(app.name)
              .event_type(app.event_types.first.name)
-            f.severities('low', 'medium', 'high')
+             .levels(app.event_types.first.levels.pluck(:name))
           end
           submit_request example.metadata
         end
@@ -106,9 +106,9 @@ describe 'filters API' do
             type: :array,
             items: :integer
           },
-          severity_filters: {
+          levels: {
             type: :array,
-            items: :string
+            items: :integer
           }
         }
       }
@@ -118,8 +118,8 @@ describe 'filters API' do
         let(:filter) do
           app = FactoryBot.create(:app, :with_event_type)
           filter = { :app_ids => [app.id],
-                     :event_type_ids => app.event_types.map(&:id),
-                     :severity_filters => %w[high critical] }
+                     :event_type_ids => app.event_types.pluck(:id),
+                     :levels => app.event_types.first.levels.pluck(:id) }
           { :filter => filter }
         end
         schema type: :object,
@@ -210,7 +210,7 @@ describe 'filters API' do
           Builder::Filter.build!(account) do |f|
             f.application(app.name)
              .event_type(app.event_types.first.name)
-            f.severities('low', 'medium', 'high')
+             .levels(app.event_types.first.levels.pluck(:name))
           end
           submit_request example.metadata
         end
@@ -241,9 +241,9 @@ describe 'filters API' do
             type: :array,
             items: :integer
           },
-          severity_filters: {
+          levels: {
             type: :array,
-            items: :string
+            items: :integer
           }
         }
       }
@@ -254,8 +254,8 @@ describe 'filters API' do
         let(:filter) do
           app = FactoryBot.create(:app, :with_event_type)
           filter = { :app_ids => [app.id],
-                     :event_type_ids => app.event_types.map(&:id),
-                     :severity_filters => %w[high critical] }
+                     :event_type_ids => app.event_types.pluck(:id),
+                     :levels => app.event_types.first.levels.pluck(:id) }
           { :filter => filter }
         end
         schema type: :object,
