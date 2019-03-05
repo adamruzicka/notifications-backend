@@ -30,10 +30,24 @@ class EndpointsController < ApplicationController
   end
 
   def update
+    correct_filter_count(nested_filters.count, @endpoint.filters.count)
+    @endpoint.filters.zip(nested_filters).each do |(filter, filter_params)|
+      filter.update(filter_params)
+    end
     process_update(@endpoint, endpoint_params, EndpointSerializer)
   end
 
   private
+
+  def correct_filter_count(requested, present)
+    if requested < present
+      @endpoint.filters.take(present - requested).destroy_all
+    elsif requested > present
+      (requested - present).times do
+        @endpoint.filters.build(account: current_user.account, endpoints: [@endpoint])
+      end
+    end
+  end
 
   def find_endpoint
     @endpoint = authorize Endpoint.find(params[:id])
@@ -44,8 +58,7 @@ class EndpointsController < ApplicationController
   end
 
   def build_filter_attributes(filter_params)
-    attributes = filter_params.merge(filter_params.merge(account: current_user.account))
-    attributes
+    filter_params.merge(account: current_user.account)
   end
 
   def build_endpoint
