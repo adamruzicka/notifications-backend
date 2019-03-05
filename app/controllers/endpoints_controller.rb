@@ -41,7 +41,7 @@ class EndpointsController < ApplicationController
 
   def correct_filter_count(requested, present)
     if requested < present
-      @endpoint.filters.take(present - requested).destroy_all
+      @endpoint.filters.limit(present - requested).destroy_all
     elsif requested > present
       (requested - present).times do
         @endpoint.filters.build(account: current_user.account, endpoints: [@endpoint])

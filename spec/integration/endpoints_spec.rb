@@ -196,7 +196,12 @@ describe 'endpoints API' do
       parameter name: :id, :in => :path, :type => :integer
       parameter name: :endpoint, in: :body, schema: {
         type: :object,
-        properties: simple_spec(%i[name type url] => :string, :active => :boolean)
+        properties: simple_spec(%i[name type url] => :string, :active => :boolean).merge(
+          filters: {
+            type: :array,
+            items: incoming_filter_spec
+          }
+        )
       }
 
       let(:'X-RH-IDENTITY') { encoded_header }
