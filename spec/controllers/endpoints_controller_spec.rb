@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe EndpointsController do
   describe '#update' do
     before do
       @app = Builder::App.build! do |app|
         app.name 'application'
-        levels = %w(low medium high)
+        levels = %w[low medium high]
         5.times do |i|
           app.event_type("event-type-#{i}").levels(levels)
         end
@@ -67,3 +70,4 @@ RSpec.describe EndpointsController do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
