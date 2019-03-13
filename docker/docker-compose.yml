@@ -73,6 +73,7 @@ services:
     command: bundle exec racecar JobCreatorConsumer
     environment:
       KAFKA_BROKER_HOST: kafka
+      KAFKA_PORT: 29092
       REDIS_URL: "redis://mcom-redis:6379"
     env_file:
       - postgres.env
