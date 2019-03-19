@@ -21,7 +21,11 @@ class ApplicationController < ActionController::API
   end
 
   def paginate(scope)
-    scope.paginate(:per_page => params[:per_page], :page => params[:page])
+    scope.paginate(:per_page => per_page(params), :page => page(params))
+  end
+
+  def pagination_options(scope)
+    { :meta => { :total => scope.count, :per_page => per_page(params), :page => page(params) } }
   end
 
   def process_create(record, serializer_class)
@@ -30,6 +34,14 @@ class ApplicationController < ActionController::API
     else
       render_unprocessable_entity record.errors
     end
+  end
+
+  def per_page(params)
+    params[:per_page] || 10
+  end
+
+  def page(params)
+    params[:page] || 1
   end
 
   def process_update(record, safe_params, serializer_class)
