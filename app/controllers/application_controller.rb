@@ -34,7 +34,7 @@ class ApplicationController < ActionController::API
         raise UnknownOrder, "Unknown sort order '#{params[:order]}'"
       end
     end
-    scope.order(params[:order] || default_order)
+    scope.order(order || default_order => direction || :asc)
   end
   # rubocop:enable Metrics/AbcSize
 
