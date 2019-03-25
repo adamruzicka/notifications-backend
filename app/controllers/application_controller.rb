@@ -30,7 +30,7 @@ class ApplicationController < ActionController::API
   def order(scope, default_order, allowed_keys)
     if params[:order]
       order, direction = params[:order].split(' ', 2)
-      unless (direction && %w[asc desc].include?(direction.downcase)) && allowed_keys.include?(order)
+      unless valid_sort_order?(order, direction, allowed_keys)
         raise UnknownOrder, "Unknown sort order '#{params[:order]}'"
       end
     end
@@ -68,5 +68,11 @@ class ApplicationController < ActionController::API
 
   def render_unprocessable_entity(errors)
     render :json => { :errors => errors }, :status => :unprocessable_entity
+  end
+
+  private
+
+  def valid_sort_order?(order, direction, allowed_keys)
+    (direction && %w[asc desc].include?(direction.downcase)) && allowed_keys.include?(order)
   end
 end
