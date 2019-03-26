@@ -26,7 +26,6 @@ class ApplicationController < ActionController::API
     scope.paginate(:per_page => params[:per_page] || 10, :page => params[:page] || 1)
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def order(scope, default_order, allowed_keys)
     if params[:order]
       order, direction = params[:order].split(' ', 2)
@@ -36,7 +35,6 @@ class ApplicationController < ActionController::API
     end
     scope.order(order || default_order => direction || :asc)
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   def process_create(record, serializer_class)
     if record.save
