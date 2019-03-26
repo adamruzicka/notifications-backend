@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe EndpointsController, type: :controller do
   describe 'POST #create' do
     it 'fails on wrong type' do
@@ -37,3 +38,4 @@ RSpec.describe EndpointsController, type: :controller do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

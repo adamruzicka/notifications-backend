@@ -5,7 +5,7 @@
     "version": "v1"
   },
   "paths": {
-    "//apps/register": {
+    "/api/webhooks/apps/register": {
       "post": {
         "summary": "Register an app",
         "tags": [
@@ -81,7 +81,7 @@
         }
       }
     },
-    "//apps": {
+    "/api/webhooks/apps": {
       "get": {
         "summary": "List all apps",
         "tags": [
@@ -281,7 +281,7 @@
         }
       }
     },
-    "//apps/{id}": {
+    "/api/webhooks/apps/{id}": {
       "get": {
         "summary": "Show an app",
         "tags": [
@@ -461,7 +461,7 @@
         }
       }
     },
-    "//endpoints": {
+    "/api/webhooks/endpoints": {
       "get": {
         "summary": "List all endpoints",
         "tags": [
@@ -633,7 +633,7 @@
         }
       }
     },
-    "//endpoints/{id}": {
+    "/api/webhooks/endpoints/{id}": {
       "get": {
         "summary": "Show an endpoint",
         "tags": [
@@ -846,7 +846,7 @@
         }
       }
     },
-    "//filters": {
+    "/api/webhooks/filters": {
       "get": {
         "summary": "List all filters",
         "tags": [
@@ -1155,7 +1155,7 @@
         }
       }
     },
-    "//filters/{id}": {
+    "/api/webhooks/filters/{id}": {
       "delete": {
         "summary": "Delete a filter",
         "tags": [
@@ -1190,7 +1190,7 @@
         }
       }
     },
-    "//endpoints/{endpoint_id}/filters": {
+    "/api/webhooks/endpoints/{endpoint_id}/filters": {
       "parameters": [
         {
           "name": "endpoint_id",
