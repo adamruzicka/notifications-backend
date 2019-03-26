@@ -56,7 +56,7 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def process_index(base, serializer_class, opts = {}, default_sort: nil, allowed_sort_keys: [])
+  def process_index(base, serializer_class, opts: {}, default_sort: nil, allowed_sort_keys: [])
     scope = policy_scope(base)
     scope = order(scope, default_sort, allowed_sort_keys) if default_sort
     scope = paginate(scope)
@@ -71,6 +71,6 @@ class ApplicationController < ActionController::API
   private
 
   def valid_sort_order?(order, direction, allowed_keys)
-    (direction && %w[asc desc].include?(direction.downcase)) && allowed_keys.include?(order)
+    (direction.nil? || %w[asc desc].include?(direction.downcase)) && allowed_keys.include?(order)
   end
 end
