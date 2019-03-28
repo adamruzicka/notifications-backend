@@ -10,7 +10,12 @@ class JobCreatorConsumer < Racecar::Consumer
     message_value = kafka_message.value
     Rails.logger.debug("Received message: #{message_value}")
 
-    message = Message.from_json(message_value)
+    begin
+      message = Message.from_json(message_value)
+    rescue ArgumentError => e
+      Rails.logger.warn("Encountered #{e.inspect} when processing message #{message_value}, discarding.")
+      return
+    end
 
     dispatcher = Dispatcher.new(message)
     dispatcher.dispatch!
