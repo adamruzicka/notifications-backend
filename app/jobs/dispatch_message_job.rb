@@ -5,7 +5,7 @@ require 'dispatcher'
 
 class DispatchMessageJob < ApplicationJob
   retry_on(::Notifications::RecoverableError, wait: :exponentially_longer, attempts: 3) do |job, error|
-    Rails.logger.warn("Discarding message #{message} after too many retries for #{error.message}")
+    Rails.logger.warn("Discarding message #{job.message} after too many retries for #{error.message}")
   end
 
   def perform(message_hash)
