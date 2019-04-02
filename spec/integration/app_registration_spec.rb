@@ -11,6 +11,7 @@ describe 'filters API' do
       description 'Lists all filters requested'
       consumes 'application/json'
       produces 'application/json'
+      operationId 'RegisterApp'
       parameter name: :application, in: :body, schema: {
         type: :object,
         properties: {
