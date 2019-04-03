@@ -11,7 +11,7 @@
         "tags": [
           "filter"
         ],
-        "description": "Lists all filters requested",
+        "description": "Register an application",
         "consumes": [
           "application/json"
         ],
