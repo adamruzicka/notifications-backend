@@ -26,3 +26,4 @@ Gemfile.lock
 .tags*
 /coverage/*
 /swagger/v1/openapi.json
+/node_modules/*
