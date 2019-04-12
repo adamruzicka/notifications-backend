@@ -18,6 +18,5 @@ Rails.application.routes.draw do
         post 'test', to: 'endpoints#test'
       end
     end
-    resources :filters, :except => %(edit new)
   end
 end
