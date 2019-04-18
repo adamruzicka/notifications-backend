@@ -122,8 +122,9 @@ class ApplicationController < ActionController::API
   end
 
   def render_not_found(what, id)
-    render :json => { :errors => "Could not find #{what} with 'id'=#{id}" },
-           :status => :not_found
+    message = "Could not find #{what}"
+    message += "with 'id'=#{id}" if id
+    render :json => { :errors => message }, :status => :not_found
   end
 
   private
