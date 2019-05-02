@@ -103,9 +103,9 @@ RSpec.describe AppRegistrationController do
     it '404s if the X-RH-IDENTITY header is set' do
       request.headers['X-RH-IDENTITY'] = encoded_header
       post :create, :params => create_params
-      expect(response.code).to eq('404')
+      expect(response.code).to eq('403')
       data = JSON.parse(response.body)
-      expect(data['errors']).to eq('Could not find route /api/hooks/apps/register')
+      expect(data['errors']).to eq('Requests with X-RH-IDENTITY are not allowed to register apps.')
     end
   end
 end

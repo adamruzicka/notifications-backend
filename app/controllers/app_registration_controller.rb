@@ -17,9 +17,12 @@ class AppRegistrationController < ActionController::API
   private
 
   def assert_internal
+    return unless request.headers['X-RH-IDENTITY']
+
     # If the request has the X-RH-IDENTITY it means it came from the outside world
     #   Requests from inside the platform don't have this header set
-    raise ActionController::RoutingError, app_path('register') if request.headers['X-RH-IDENTITY']
+    render json: { errors: 'Requests with X-RH-IDENTITY are not allowed to register apps.' },
+           status: :forbidden
   end
 
   def destroy_obsolete(scope, requested_ids)
