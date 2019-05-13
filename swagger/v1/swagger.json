@@ -65,6 +65,35 @@
                     }
                   }
                 }
+              },
+              "example": {
+                "application": {
+                  "name": "app-1",
+                  "title": "Application 1"
+                },
+                "event_types": [
+                  {
+                    "id": "something",
+                    "title": "Something",
+                    "levels": [
+
+                    ]
+                  },
+                  {
+                    "id": "something-else",
+                    "title": "Something else",
+                    "levels": [
+                      {
+                        "id": "level-1",
+                        "title": "Low"
+                      },
+                      {
+                        "id": "level-2",
+                        "title": "High"
+                      }
+                    ]
+                  }
+                ]
               }
             }
           }
@@ -77,6 +106,30 @@
               "properties": {
                 "data": {
                   "$ref": "#/definitions/app"
+                }
+              },
+              "example": {
+                "data": {
+                  "id": "1404",
+                  "type": "app",
+                  "attributes": {
+                    "name": "app-1",
+                    "title": "Application 1"
+                  },
+                  "relationships": {
+                    "event_types": {
+                      "data": [
+                        {
+                          "id": "1680",
+                          "type": "event_type"
+                        },
+                        {
+                          "id": "1681",
+                          "type": "event_type"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }

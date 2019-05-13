@@ -3,6 +3,27 @@
 require 'rails_helper'
 require 'swagger_helper'
 
+app = { :name => 'app-1', :title => 'Application 1' }
+levels = [
+  { :id => 'level-1', :title => 'Low' },
+  { :id => 'level-2', :title => 'High' }
+]
+event_types = [
+  { :id => 'something', :title => 'Something', :levels => [] },
+  { :id => 'something-else', :title => 'Something else', :levels => levels }
+]
+application = { :application => app, :event_types => event_types }
+
+EXAMPLE = { 'data' =>
+  { 'id' => '1404', 'type' => 'app',
+    'attributes' => { 'name' => 'app-1', 'title' => 'Application 1' },
+    'relationships' => {
+      'event_types' =>
+        { 'data' => [
+          { 'id' => '1680', 'type' => 'event_type' }, { 'id' => '1681', 'type' => 'event_type' }
+        ] }
+    } } }.freeze
+
 # rubocop:disable Metrics/BlockLength
 describe 'filters API' do
   path "#{ENV['PATH_PREFIX']}/#{ENV['APP_NAME']}/apps/register" do
@@ -56,7 +77,8 @@ describe 'filters API' do
               }
             }
           }
-        }
+        },
+        example: application
       }
 
       response '200', 'registers the application' do
@@ -65,20 +87,10 @@ describe 'filters API' do
                  data: {
                    '$ref' => '#/definitions/app'
                  }
-               }
+               },
+               example: EXAMPLE
 
-        let(:application) do
-          app = { :name => 'app-1', :title => 'Application 1' }
-          levels = [
-            { :id => 'level-1', :title => 'Low' },
-            { :id => 'level-2', :title => 'High' }
-          ]
-          event_types = [
-            { :id => 'something', :title => 'Something', :levels => [] },
-            { :id => 'something-else', :title => 'Something else', :levels => levels }
-          ]
-          { :application => app, :event_types => event_types }
-        end
+        let(:application) { application }
 
         before do |example|
           submit_request example.metadata
