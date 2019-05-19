@@ -8,3 +8,5 @@ namespace :documentation do
     OpenApi.write_docs
   end
 end
+
+task :test => 'documentation:generate'
