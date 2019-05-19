@@ -47,7 +47,6 @@ group :development, :test do
   gem 'mocha'
   gem 'pry'
   gem 'rspec-rails'
-  gem 'rswag-specs'
   gem 'rubocop'
   gem 'shoulda-context'
   gem 'shoulda-matchers'

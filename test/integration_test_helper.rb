@@ -8,7 +8,7 @@ class CommitteeTest < ActionDispatch::IntegrationTest
 
   def committee_options
     @committee_options ||= {
-      schema: Committee::Drivers.load_from_file('swagger/open_api/shim_doc.json'),
+      schema: Committee::Drivers.load_from_file('swagger/v1/openapi.json'),
       # prefix: "/api/hooks",
       validate_success_only: false
     }
