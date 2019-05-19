@@ -73,3 +73,5 @@ gem 'resque'
 gem 'racecar'
 gem 'resque-multi-job-forks', '~> 0.5.0'
 gem 'resque-scheduler', :git => 'https://github.com/resque/resque-scheduler.git', :ref => 'bbf4930'
+
+gem 'zero-rails_openapi'
