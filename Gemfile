@@ -75,3 +75,4 @@ gem 'resque-scheduler', :git => 'https://github.com/resque/resque-scheduler.git'
 
 gem 'committee'
 gem 'zero-rails_openapi'
+gem 'openapi_parser', '= 0.2.5'
