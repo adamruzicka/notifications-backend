@@ -7,6 +7,8 @@ require 'tempfile'
 desc 'Run tests and rubocop'
 namespace :test do
   task :validate do
+    require 'simplecov'
+    SimpleCov.start 'rails'
     Rake::Task['test'].invoke
     Rake::Task['spec'].invoke
   end
