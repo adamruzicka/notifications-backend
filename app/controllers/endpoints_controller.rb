@@ -51,8 +51,9 @@ class EndpointsController < ApplicationController
       return
     end
 
-    render json: single_error_hash(status: :bad_gateway, title: 'Failed to send test event', detail: job.message),
-           status: :bad_gateway
+    status = :bad_gateway
+    render json: single_error_hash(status: status, title: 'Failed to send test event', detail: job.message),
+           status: status
   end
 
   private
