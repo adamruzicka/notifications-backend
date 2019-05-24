@@ -87,6 +87,7 @@ module Documentation
         path! :id, Integer, example: 1
 
         response 204, 'Sent successfully'
+        response 502, 'Failed to send', 'application/vnd.api+json', data: :Errors
       end
 
       components do

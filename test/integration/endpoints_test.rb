@@ -192,6 +192,23 @@ class EndpointsTest < CommitteeTest
     assert_schema_conform
   end
 
+  test 'tests an non-functional endpoint' do
+    endpoint = begin
+      endpoint = FactoryBot.build(:endpoint)
+      endpoint.account = account
+      endpoint.save!
+      endpoint
+    end
+    id = endpoint.id
+
+    Endpoint.any_instance.expects(:send_message).raises(Notifications::FatalError.new('It failed'))
+
+    post test_endpoint_path(id: id), headers: { 'X-RH-IDENTITY' => encoded_header }
+
+    assert_response 502
+    assert_schema_conform
+  end
+
   test 'Shows filters for a single endpoint' do
     id = begin
            endpoint = FactoryBot.build(:endpoint)

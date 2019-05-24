@@ -43,10 +43,16 @@ class EndpointsController < ApplicationController
   end
 
   def test
-    SendNotificationJob.perform_now(@endpoint, Time.zone.now,
+    job = SendNotificationJob.perform_now(@endpoint, Time.zone.now,
                                     'Test', 'Test', 'Test',
                                     'Test message from webhooks')
-    head :no_content
+    if job.nil?
+      head :no_content
+      return
+    end
+
+    render json: single_error_hash(status: :bad_gateway, title: 'Failed to send test event', detail: job.message),
+           status: :bad_gateway
   end
 
   private
