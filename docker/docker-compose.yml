@@ -146,7 +146,7 @@ services:
       dockerfile: docker/Dockerfile.rails
     volumes:
       - ..:/app
-    command: bundle exec prometheus_exporter
+    command: bundle exec prometheus_exporter -a lib/racecar_collector.rb
     ports:
       - 9394:9394
     expose:
