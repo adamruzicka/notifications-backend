@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 class ApplicationConsumer < Racecar::Consumer
+  # rubocop:disable Metrics/MethodLength
   def with_metrics
     puts PrometheusExporter::Client.default.inspect
     start = ::Process.clock_gettime(::Process::CLOCK_MONOTONIC)
@@ -13,4 +16,5 @@ class ApplicationConsumer < Racecar::Consumer
       duration: duration
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end

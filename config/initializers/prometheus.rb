@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if Rails.env != 'test' && ENV['PROMETHEUS_EXPORTER_HOST'] && ENV['PROMETHEUS_EXPORTER_PORT']
   require 'prometheus_exporter/client'
   require 'prometheus_exporter/metric'
@@ -18,8 +20,8 @@ if Rails.env != 'test' && ENV['PROMETHEUS_EXPORTER_HOST'] && ENV['PROMETHEUS_EXP
   # This reports stats per request like HTTP status and timings
   if app_name == 'hooks-backend'
     Rails.application.middleware.unshift PrometheusExporter::Middleware
-    PrometheusExporter::Instrumentation::Process.start(type: "web", labels: labels)
+    PrometheusExporter::Instrumentation::Process.start(type: 'web', labels: labels)
   end
 
-  PrometheusExporter::Instrumentation::Process.start(type: "master", labels: labels)
+  PrometheusExporter::Instrumentation::Process.start(type: 'master', labels: labels)
 end

@@ -5,6 +5,7 @@ require 'notifications'
 class ApplicationJob < ActiveJob::Base
   around_perform :handle_prometheus
 
+  # rubocop:disable Metrics/MethodLength
   def handle_prometheus
     success = false
     shutdown = false
@@ -18,11 +19,12 @@ class ApplicationJob < ActiveJob::Base
   ensure
     duration = ::Process.clock_gettime(::Process::CLOCK_MONOTONIC) - start
     PrometheusExporter::Client.default.send_json(
-        type: 'resque',
-        name: self.class.name,
-        success: success,
-        shutdown: shutdown,
-        duration: duration
+      type: 'resque',
+      name: self.class.name,
+      success: success,
+      shutdown: shutdown,
+      duration: duration
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end
