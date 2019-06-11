@@ -30,9 +30,8 @@ class ResqueCollector < PrometheusExporter::Server::TypeCollector
   end
 
   def collect(obj)
-    default_labels = { job_name: obj['name'] }
-    custom_labels = obj['custom_labels']
-    labels = custom_labels.nil? ? default_labels : default_labels.merge(custom_labels)
+    custom_labels = obj.fetch('custom_labels', {})
+    labels = { job_name: obj['name'] }.merge(custom_labels)
 
     @resque_job_duration_seconds.observe(obj['duration'], labels)
     @resque_jobs_total.observe(1, labels)

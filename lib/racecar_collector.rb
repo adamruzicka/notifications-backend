@@ -18,9 +18,8 @@ class RacecarCollector < PrometheusExporter::Server::TypeCollector
   end
 
   def collect(obj)
-    default_labels = { consumer_name: obj['name'] }
-    custom_labels = obj['custom_labels']
-    labels = custom_labels.nil? ? default_labels : default_labels.merge(custom_labels)
+    custom_labels = obj.fetch('custom_labels', {})
+    labels = { consumer_name: obj['name'] }.merge(custom_labels)
 
     @racecar_message_duration_seconds.observe(obj['duration'], labels)
     @racecar_messages_total.observe(1, labels)
