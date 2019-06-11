@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-if Rails.env != 'test' && ENV['PROMETHEUS_EXPORTER_HOST'] && ENV['PROMETHEUS_EXPORTER_PORT']
+require 'prometheus'
+
+if Prometheus.available?
   require 'prometheus_exporter/client'
   require 'prometheus_exporter/metric'
   require 'prometheus_exporter/middleware'

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'notifications'
+require 'prometheus'
 
 class ApplicationJob < ActiveJob::Base
   around_perform :handle_prometheus
@@ -18,7 +19,7 @@ class ApplicationJob < ActiveJob::Base
     raise e
   ensure
     duration = ::Process.clock_gettime(::Process::CLOCK_MONOTONIC) - start
-    PrometheusExporter::Client.default.send_json(
+    Prometheus.send_json(
       type: 'resque',
       name: self.class.name,
       success: success,
