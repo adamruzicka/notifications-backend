@@ -6,7 +6,8 @@ require 'uri'
 module Endpoints
   class HttpEndpoint < Endpoint
     def send_message(timestamp:, level:, message:, event_type:, application:)
-      payload = to_payload(timestamp: timestamp, level: level, message: message, event_type: event_type, application: application)
+      payload = to_payload(timestamp: timestamp, message: message,
+                           application: application, event_type: event_type, level: level)
       response = nil
 
       http_request do |connection|

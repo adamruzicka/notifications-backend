@@ -28,14 +28,16 @@ class HttpEndpointTest < ActiveSupport::TestCase
   it 'POSTs successfully' do
     expect_request
 
-    endpoint.send_message(timestamp: timestamp, level: level, message: message_text, application: application, event_type: event_type)
+    endpoint.send_message(timestamp: timestamp, message: message_text,
+                          application: application, event_type: event_type, level: level)
   end
 
   it 'recovers from timeout' do
     expect_request.to_timeout
 
     assert_raises Notifications::RecoverableError do
-      endpoint.send_message(timestamp: timestamp, level: level, message: message_text, application: application, event_type: event_type)
+      endpoint.send_message(timestamp: timestamp, message: message_text,
+                            application: application, event_type: event_type, level: level)
     end
   end
 
@@ -43,7 +45,8 @@ class HttpEndpointTest < ActiveSupport::TestCase
     expect_request.to_return(status: 501)
 
     assert_raises Notifications::RecoverableError do
-      endpoint.send_message(timestamp: timestamp, level: level, message: message_text, application: application, event_type: event_type)
+      endpoint.send_message(timestamp: timestamp, message: message_text,
+                            application: application, event_type: event_type, level: level)
     end
   end
 
@@ -51,7 +54,8 @@ class HttpEndpointTest < ActiveSupport::TestCase
     expect_request.to_return(status: 404)
 
     assert_raises Notifications::FatalError do
-      endpoint.send_message(timestamp: timestamp, level: level, message: message_text, application: application, event_type: event_type)
+      endpoint.send_message(timestamp: timestamp, message: message_text,
+                            application: application, event_type: event_type, level: level)
     end
   end
 end

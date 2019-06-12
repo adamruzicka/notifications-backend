@@ -24,14 +24,17 @@ class SendNotificationJob < ApplicationJob
   around_perform :handle_log
   around_perform :handle_stats
 
+  # rubocop:disable Metrics/ParameterLists
   def perform(endpoint, timestamp, application, event_type, level, message)
     unless endpoint.active
       Rails.logger.debug("Endpoint #{endpoint} is not active, discarding message")
       return
     end
 
-    endpoint.send_message(timestamp: timestamp, level: level, message: message, event_type: event_type, application: application)
+    endpoint.send_message(timestamp: timestamp, message: message,
+                          application: application, event_type: event_type, level: level)
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def endpoint
     arguments.first
