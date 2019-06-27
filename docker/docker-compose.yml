@@ -49,6 +49,9 @@ services:
     environment:
       RAILS_LOG_TO_STDOUT: "true"
       APPLICATION_TYPE: hooks-backend
+      REDIS_SERVICE_NAME: mcom-redis
+      REDIS_PASSWORD: redispass
+      MCOM_REDIS_SERVICE_HOST: mcom-redis
     ports:
       - 3000:3000
     depends_on:
