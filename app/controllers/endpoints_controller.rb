@@ -43,7 +43,7 @@ class EndpointsController < ApplicationController
   end
 
   def test
-    job = SendNotificationJob.perform_now(@endpoint, Time.zone.now,
+    job = SendNotificationJob.perform_now(@endpoint, Time.zone.now.to_s,
                                           'Test', 'Test', 'Test',
                                           'Test message from webhooks')
     if job.nil?
